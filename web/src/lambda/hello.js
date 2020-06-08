@@ -1,8 +1,28 @@
-// this uses the callback syntax, however, we encourage you to try the async/await syntax shown in async-dadjoke.js
-export function handler(event, context, callback) {
-  console.log("queryStringParameters", event.queryStringParameters);
-  callback(null, {
-    statusCode: 200,
-    body: JSON.stringify({ msg: "Hello, World!" }),
+import { request, GraphQLClient } from "graphql-request";
+
+export async function handler(event, context) {
+  const GET_DEVICES = `
+    query findDeviceByID($id: ID!) {
+      findDeviceByID(id: $id) {
+        name
+      }
+    }
+  `;
+
+  const client = new GraphQLClient("https://graphql.fauna.com/graphql", {
+    headers: {
+      authorization: `Bearer ${process.env.DATABASE_KEY}`,
+    },
   });
+  try {
+    const response = await client.request(GET_DEVICES, { id: 1 });
+    console.log(response);
+  } catch (e) {
+    console.log(e);
+  }
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ msg: "DONE" }),
+  };
 }

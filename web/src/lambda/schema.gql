@@ -1,0 +1,5 @@
+type Device {
+  id: ID! @unique
+  name: String! @unique
+  status: Boolean!
+}
