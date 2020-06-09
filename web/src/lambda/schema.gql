@@ -1,5 +1,9 @@
-type Device {
+interface Device {
   id: ID! @unique
-  name: String! @unique
+  device: Device!
   status: Boolean!
+}
+
+type Fan implements Device {
+  device: Device!
 }
