@@ -2,7 +2,7 @@ import { request, GraphQLClient } from "graphql-request";
 
 export async function handler(event, context) {
   const GET_DEVICES = `
-    query findDeviceByID($id: ID!) {
+    query devices($id: ID!) {
       findDeviceByID(id: $id) {
         name
       }

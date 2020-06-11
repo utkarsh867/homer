@@ -1,19 +1,16 @@
 import React from "react";
-import "./App.css";
-import { LambdaDemo } from "./components/LambdaDemo";
-import { WitAI } from "./components/WitAI";
+import { ThemeProvider, CSSReset, ColorModeProvider } from "@chakra-ui/core";
+import theme from "./theme";
+
+import Home from "./pages/home";
 
 const App = () => (
-  <div className="App">
-    <header className="App-header">HOMER</header>
-    <main>
-      <div>
-        <LambdaDemo />
-        <WitAI />
-      </div>
-    </main>
-    <footer></footer>
-  </div>
+  <ThemeProvider theme={theme}>
+    <ColorModeProvider>
+      <CSSReset />
+      <Home />
+    </ColorModeProvider>
+  </ThemeProvider>
 );
 
 export default App;

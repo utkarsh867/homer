@@ -1,28 +1,33 @@
 import React, { useState } from "react";
+import { Box, Button, useToast } from "@chakra-ui/core";
 
 export const LambdaDemo = () => {
   const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState("");
+  const toast = useToast();
 
-  const handleClick = (api) => (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
     setLoading(true);
 
-    fetch("/.netlify/functions/" + api)
+    fetch("/.netlify/functions/hello")
       .then((response) => response.json())
       .then((json) => {
         setLoading(false);
-        setMsg(json.msg);
+        toast({
+          title: "Received a response",
+          description: json.msg,
+          isClosable: true,
+          duration: 3000,
+          status: "success",
+        });
       });
   };
 
   return (
-    <p>
-      <button onClick={handleClick("hello")}>
-        {loading ? "Loading..." : "Call Lambda"}
-      </button>
-      <br />
-      <span>{msg}</span>
-    </p>
+    <Box p={5}>
+      <Button onClick={handleClick} isLoading={loading}>
+        Call Lambda
+      </Button>
+    </Box>
   );
 };
